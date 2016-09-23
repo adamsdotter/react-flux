@@ -15,13 +15,25 @@ class TodoStore extends EventEmitter {
           complete: false
         }
     ];
-  };
+  }
 
   getAll() {
     return this.todos;
-  };
+  }
+
+  createTodo(text) {
+    const id = Math.random();
+
+    this.todos.push({
+      id,
+      text,
+      completed: false
+    });
+
+    this.emit('change');
+  }
 }
 
 const todoStore = new TodoStore();
-
+window.todoStore = todoStore;
 export default todoStore;
