@@ -1,0 +1,22 @@
+[
+  {
+    "id": 7656781213,
+    "text": "Learn React",
+    "complete": true
+  },
+  {
+    "id": 5678123,
+    "text": "Water plants",
+    "complete": false
+  },
+  {
+    "id": 56781212123,
+    "text": "Cook pasta",
+    "complete": true
+  },
+  {
+    "id": 5678122121203,
+    "text": "Sleep early",
+    "complete": false
+  }
+]
