@@ -23,25 +23,22 @@ class TodoStore extends EventEmitter {
     return this.todos;
   }
 
-  createTodo(text) {
-    const id = Math.random();
-
-    this.todos.push({
-      id,
-      text,
-      completed: false
+  createTodo(todos) {
+    const isTextOnly = typeof todos === 'string';
+    let createItem = (function(text, completed) {
+        return {
+          id: Math.random(),
+          text: text,
+          completed: completed
+        };
     });
 
-    this.emit('change');
-  }
-
-  addMoreTodos(todos) {
-    for (let todo of todos) {
-      this.todos.push({
-        id: todo.id,
-        text: todo.text,
-        completed: todo.completed
-      });
+    if(isTextOnly) {
+      this.todos.push(createItem(todos, false));
+    } else {
+      for (let todo of todos) {
+        this.todos.push(createItem(todo.text, todo.completed));
+      }
     }
 
     this.emit('change');
@@ -54,7 +51,7 @@ class TodoStore extends EventEmitter {
         break;
       }
       case 'RECEIVE_TODOS': {
-        this.addMoreTodos(action.data)
+        this.createTodo(action.data)
       }
     }
   }
