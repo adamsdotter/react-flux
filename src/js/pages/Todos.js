@@ -10,7 +10,8 @@ export default class Todos extends React.Component {
     this.state = {
       todos: TodoStore.getAll(),
       newTodo: '',
-      warningText: ''
+      warningText: '',
+      fetchedTodos: false
     };
   }
 
@@ -43,6 +44,11 @@ export default class Todos extends React.Component {
     }
   }
 
+  fetchTodos() {
+    this.setState({ fetchedTodos: true });
+    TodoActions.fetchTodos();
+  }
+
   writeText(e) {
     const val = e.target.value;
 
@@ -66,6 +72,7 @@ export default class Todos extends React.Component {
         {warningText}
         <input value={this.state.newTodo} onChange={this.writeText.bind(this)} type="text" />
         <button onClick={this.createTodo.bind(this)}>Create!</button>
+        <button disabled={this.state.fetchedTodos} onClick={this.fetchTodos.bind(this)}>Fetch more todos!</button>
         <ul>{TodoComponents}</ul>
       </div>
     );
