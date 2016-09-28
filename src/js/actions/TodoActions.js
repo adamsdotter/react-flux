@@ -1,4 +1,4 @@
-import Dispatcher from '../dispatcher';
+import dispatcher from '../dispatcher';
 
 export function createTodo(text) {
   dispatcher.dispatch({
@@ -12,4 +12,17 @@ export function deleteTodo(id) {
     type: 'DELETE_TODO',
     id
   });
+}
+
+export function fetchTodos() {
+  dispatcher.dispatch({type: 'FETCH_TODOS'});
+
+  fetch('../../data/todos.json')
+  .then((res) => res.json())
+  .then((data) => {
+    dispatcher.dispatch({type: 'RECEIVE_TODOS', data: data});
+  })
+  .catch(function(error) {
+      dispatcher.dispatch({type: 'FETCH_TODOS_ERROR', error: error});
+  });;
 }
